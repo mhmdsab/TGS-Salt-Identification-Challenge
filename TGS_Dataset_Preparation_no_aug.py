@@ -20,7 +20,7 @@ class write_augmented_data:
     
     def load_data(self):
        
-       imgs = [cv2.imread(os.path.join(self.img_path,self.imgs_list[i]),1)/255
+       imgs = [cv2.imread(os.path.join(self.img_path,self.imgs_list[i]),0)/255
        for i in range(len(self.masks_list))]
        
        masks = [cv2.imread(os.path.join(self.mask_path,self.masks_list[i]),0)/255
@@ -52,80 +52,6 @@ class write_augmented_data:
         h,w = mask.shape
         return np.reshape(mask,(h,w,1))
    
-    
-    def Augment_data(self):
-        
-        img,mask = self.load_data()
-        
-        for i in range(len(mask)):
-            rand = np.random.choice(3)
-            if rand == 0:
-                #horizontally flipped images
-                hflip_img,hflipd_mask = hflip(img[i],mask[i])
-                scipy.misc.imsave(os.path.join(self.img_path,'hflipped_'+self.imgs_list[i]),hflip_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'hflipped_'+self.masks_list[i]),hflipd_mask)
-
-
-            elif rand == 1:
-                #vertically flipped images
-                vflip_img,vflipd_mask = vflip(img[i],mask[i])
-                scipy.misc.imsave(os.path.join(self.img_path,'vflipped_'+self.imgs_list[i]),vflip_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'vflipped_'+self.masks_list[i]),vflipd_mask)
-
-                
-            elif rand == 2:
-                #horizontally and vertically flipped images
-                hvflip_img,hvflipd_mask = hvflip(img[i],mask[i])
-                scipy.misc.imsave(os.path.join(self.img_path,'hvflipped_'+self.imgs_list[i]),hvflip_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'hvflipped_'+self.masks_list[i]),hvflipd_mask)
-
-            
-#            elif rand == 3:
-#                #transposed images
-#                trans_img, trans_mask = transpose(img[i], mask[i])
-#                print(trans_mask.shape)
-#                print(trans_img.shape)
-#                scipy.misc.imsave(os.path.join(self.img_path,'transposed_'+self.imgs_list[i]), trans_img)
-#                scipy.misc.imsave(os.path.join(self.mask_path,'transposed_'+self.masks_list[i]), trans_mask)
-
-                
-            #rescaled crops
-            sizes = [512,480,384,256]
-            cropped_img, cropped_mask = rescaled_crops(img[i], mask[i],np.random.choice(sizes))
-            cropped_img = cv2.resize(cropped_img,(101,101))
-            cropped_mask = cv2.resize(cropped_mask,(101,101))
-            scipy.misc.imsave(os.path.join(self.img_path,'cropped_'+self.imgs_list[i]),cropped_img)
-            scipy.misc.imsave(os.path.join(self.mask_path,'cropped_'+self.masks_list[i]),cropped_mask)
-            
-            #padded images
-            padded_img, padded_mask = do_center_pad_to_factor2(img[i], mask[i])
-            rand1 = np.random.choice(2)
-            
-            if rand1 == 0:
-                padded_img = do_invert_intensity(padded_img)
-                padded_img = cv2.resize(padded_img,(101,101))
-                padded_mask = cv2.resize(padded_mask,(101,101))
-                scipy.misc.imsave(os.path.join(self.img_path,'padded-inv-intensity_'+self.imgs_list[i]),padded_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'padded-inv-intensity_'+self.masks_list[i]),padded_mask)
-                
-            if rand1 == 1:
-                padded_img = do_brightness_shift(padded_img,alpha=np.random.choice([-0.3,-0.1,0.1,0.3]))
-                scipy.misc.imsave(os.path.join(self.img_path,'padded-brightness-shift_'+self.imgs_list[i]),padded_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'padded-brightness-shift_'+self.masks_list[i]),padded_mask)
-            
-                
-            rand2 = np.random.choice(2)
-
-            if rand2 == 0:
-                transformed_img, transformed_mask = do_shift_scale_rotate2(img[i], mask[i])
-                scipy.misc.imsave(os.path.join(self.img_path,'shift-scale-rotated_'+self.imgs_list[i]),transformed_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'shift-scale-rotated_'+self.masks_list[i]),transformed_mask)
-                
-            elif rand2 == 1:
-                sheared_img, sheared_mask = do_horizontal_shear2(img[i], mask[i],dx=0.2)
-                scipy.misc.imsave(os.path.join(self.img_path,'sheared_'+self.imgs_list[i]),sheared_img)
-                scipy.misc.imsave(os.path.join(self.mask_path,'sheared_'+self.masks_list[i]),sheared_mask)
-    
  
     def create_dataframe(self):
         
@@ -142,7 +68,7 @@ class write_augmented_data:
         df['imgs'] = imgs_list
         df['masks'] = masks_list
        
-        df['img_values'] = [cv2.imread(os.path.join(self.img_path,i),1)/255 for i in imgs_list]
+        df['img_values'] = [cv2.imread(os.path.join(self.img_path,i),0)/255 for i in imgs_list]
         df['mask_values'] = [cv2.imread(os.path.join(self.mask_path,i),0)/255 for i in masks_list]
         
         df['coverage'] = df.mask_values.map(np.sum)
