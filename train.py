@@ -1,7 +1,7 @@
 import cv2
 import tensorflow as tf
 import numpy as np
-from MIOU_ahmed import *
+from MIOU import *
 from TGS_Dataset_Preparation import *
 from Network_Arcitecture import nn_model
 from Weight_Initializer import Initialize_Weights
