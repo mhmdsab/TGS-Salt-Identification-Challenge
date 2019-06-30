@@ -12,15 +12,6 @@ def MIOU(logits, labels, threshold, batch_size):
         else: iou = intersection/(union+1e-8)
         ious.append(iou)
     return ious
-#a = np.array([1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0])
-#a = a.reshape([2, 5, 5])
-#b = np.array([1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1])
-#b = b.reshape([2, 5, 5])
-#
-#c = MIOU(a, b, 0.5, 2)
-#print(a[0, :, :])
-#print(b[0, :, :])
-#print(c[0])
 
 def Kaggle_MIOU(logits, labels, thresholds, batch_size):
     per_batch = []
