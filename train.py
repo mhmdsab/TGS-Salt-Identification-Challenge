@@ -87,7 +87,7 @@ with tf.Session() as sess:
             _, loss, s_pred, y_labels = sess.run([optimizer, cost, seg_pred, labels]
             ,feed_dict = {'X:0':batch_x,'Y:0':batch_y, 'training_flag:0': True, 'decay:0':0.9, 'keep_prob:0':1})
             
-            iou = MIOU(s_pred, y_labels, 0.4, batch_size)
+            iou = MIOU(s_pred, y_labels, 0.5, batch_size)
             epoch_iou_list.extend(iou)
             
             kiou = Kaggle_MIOU(s_pred, y_labels, t, batch_size)
@@ -114,7 +114,7 @@ with tf.Session() as sess:
             t_loss, s_test_pred, y_test_labels = sess.run([cost, seg_pred, labels]
             ,feed_dict = {'X:0':test_batch_x, 'Y:0':test_batch_y, 'training_flag:0': True, 'decay:0':0.9, 'keep_prob:0':1})
             
-            test_iou = MIOU(s_test_pred, y_test_labels, 0.4, batch_size)
+            test_iou = MIOU(s_test_pred, y_test_labels, 0.5, batch_size)
             test_iou_list.extend(test_iou)
             
             test_kiou = Kaggle_MIOU(s_test_pred, y_test_labels, t, batch_size)
