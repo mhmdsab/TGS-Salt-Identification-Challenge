@@ -1,9 +1,3 @@
- # -*- coding: utf-8 -*-
-"""
-Created on Wed Apr 24 22:30:09 2019
-
-@author: ASabry
-"""
 import numpy as np
 
 def MIOU(logits, labels, threshold, batch_size):
@@ -43,10 +37,3 @@ def Kaggle_MIOU(logits, labels, thresholds, batch_size):
             per_thresh.append(iou)
         per_batch.append(np.mean(np.array(per_thresh)))
     return per_batch
-
-#a = np.array([0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0, 0, 0, 0, 1, 0, 1, 0.8, 0, 1, 1, 0, 1, 0, 0.85, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0])
-#a = a.reshape([2, 5, 5])
-#b = np.array([1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1])
-#b = b.reshape([2, 5, 5])
-#t = [0.5, 0.55]
-#c = Kaggle_MIOU(a, b, t, 2)
