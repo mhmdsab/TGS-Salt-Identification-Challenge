@@ -6,7 +6,7 @@ Input: 128x128,  grey scale image.
 
 Augmentations
 
-Brightness , vflip, hflip, scale, rotate, horizontal_shear. However, using heavy augmentations could cause problems while training
+Brightness , vflip, hflip
 
 Base model
 
