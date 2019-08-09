@@ -15,12 +15,6 @@ from utils import classify_depth, cov_to_class, vertical_mask, small_mask, large
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.applications.resnet50 import preprocess_input
 
-#imgs_folder = 'E:/Mohammed/IT/machine learning course/ml projects/TGS Salt Identification Challenge/Data/Train/images'
-#mask_folder = 'E:/Mohammed/IT/machine learning course/ml projects/TGS Salt Identification Challenge/Data/Train/masks'
-#test_folder = 'E:/Mohammed/IT/machine learning course/ml projects/TGS Salt Identification Challenge/Data/Test/images'
-#
-#train = 'E:/Mohammed/IT/machine learning course/ml projects/TGS Salt Identification Challenge/Data/train.csv'
-#depth = 'E:/Mohammed/IT/machine learning course/ml projects/TGS Salt Identification Challenge/Data/depths.csv'
 
 class prepare_data:
     
@@ -110,10 +104,6 @@ class prepare_data:
     def val_empty_mask_gen(self):
         return self.val_set.empty_mask.values
 
-
-
-
-#inst = prepare_data(imgs_folder, mask_folder, test_folder, train, depth)
 
 
 
