@@ -21,6 +21,7 @@ Learning
 Batch size =15 (maximum available batch size), Adam optimizer, evaluation metric is mean intersection over union, learning rate assigned manually at every training stage.
 
 ---------------------------------------Keras implementation--------------------------------------
+
 Input: 101x101,  RGB scale image padded with reflect mode to 128x128.
 
 
