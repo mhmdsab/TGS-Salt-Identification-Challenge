@@ -25,10 +25,6 @@ test_folder = 'D:/Information Technology/Deep Learning/Projects/TGS Project/TGS 
 train = 'D:/Information Technology/Deep Learning/Projects/TGS Project/TGS Salt Identification Challenge/Data/train.csv'
 depth = 'D:/Information Technology/Deep Learning/Projects/TGS Project/TGS Salt Identification Challenge/Data/depths.csv'
 
-def iou_m(labels, logits):
-    return tf.py_func(MIOU, [labels, logits, 0.5, 16], tf.float64)
-
-batch_size = 8
 inst = prepare_data(imgs_folder, mask_folder, test_folder, train, depth)
 
 train_x, train_y = inst.train_data_gen()
@@ -37,7 +33,7 @@ val_x, val_y = inst.val_data_gen()
 model = Unet('resnet34',input_shape = (128,128,3), encoder_weights='imagenet',
              decoder_filters=(256, 128, 64, 32),FPA = True, SCSE = True, activation = 'sigmoid')
 
-extracted_outputs = extract_outputs(model,FPA = False, SCSE = False)
+extracted_outputs = extract_outputs(model,FPA = True, SCSE = True)
 final_model = Model(model.input, extracted_outputs)
 
 opt = Adam(lr = 0.01)
